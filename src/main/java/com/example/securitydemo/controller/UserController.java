@@ -1,6 +1,9 @@
 package com.example.securitydemo.controller;
 
+import com.example.securitydemo.model.UserInfo;
+import com.example.securitydemo.repository.UserInfoRepository;
 import com.example.securitydemo.service.JwtService;
+import com.example.securitydemo.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,10 +19,13 @@ public class UserController {
 
     private final JwtService jwtService;
 
+    private final UserService userService;
+
     private final AuthenticationManager authenticationManager;
 
-    public UserController(JwtService jwtService, AuthenticationManager authenticationManager) {
+    public UserController(JwtService jwtService, UserService userService, AuthenticationManager authenticationManager) {
         this.jwtService = jwtService;
+        this.userService = userService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -34,6 +40,11 @@ public class UserController {
         } else {
             throw new BadCredentialsException("Not found");
         }
+    }
+
+    @PostMapping("/new")
+    public String registerUser(@RequestBody UserInfoRequest userInfo) {
+        return userService.registerUser(userInfo.toEntity());
     }
 
 }

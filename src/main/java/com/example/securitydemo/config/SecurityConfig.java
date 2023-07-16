@@ -27,7 +27,8 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
         "/hello/welcome",
-        "/users/token"
+        "/users/token",
+        "/users/new"
     };
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
